@@ -5,7 +5,7 @@ function updateAnimeList() {
   fetch('http://localhost:5000/getAnimes')
     .then(response => response.json())
     .then(animes => {
-      animes.forEach((anime, index) => {
+      animes.forEach(anime => {
         const animeItem = document.createElement('div');
         animeItem.classList.add('body_images_item');
         animeItem.innerHTML = `
@@ -32,16 +32,13 @@ document.getElementById('saveAnimeBtn').addEventListener('click', () => {
   const imageFile = imageInput.files[0];
 
   if (title && imageFile) {
-    const imageURL = URL.createObjectURL(imageFile);
-
-    const newAnime = { title, image: imageURL };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('image', imageFile);
 
     fetch('http://localhost:5000/addAnime', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newAnime),
+      body: formData,
     })
       .then(response => response.json())
       .then(data => {
@@ -72,10 +69,6 @@ document.getElementById('searchInput').addEventListener('input', function () {
 
   items.forEach(item => {
     const title = item.querySelector('h3').textContent.toLowerCase();
-    if (title.includes(searchQuery)) {
-      item.style.display = 'block';
-    } else {
-      item.style.display = 'none';
-    }
+    item.style.display = title.includes(searchQuery) ? 'block' : 'none';
   });
 });
