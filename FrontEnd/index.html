@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Básica</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="reset.css">
+</head>
+
+<body>
+  <div class="content">
+    <div class="header">
+      <h1 class="header_title">Animes assistidos</h1>
+    </div>
+    <div class="body">
+      <button id="addAnimeBtn" class="add-anime-btn">Adicionar Anime</button>
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar por título...">
+
+      <div class="body_images" id="animeList">
+      </div>
+    </div>
+  </div>
+
+  <div id="animeModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModalBtn" class="close">&times;</span>
+      <h2>Adicionar ou Editar Anime</h2>
+      <div class='modal-text'>
+        <label for="animeTitle">Título:</label>
+        <input type="text" id="animeTitle" placeholder="Título do Anime">
+      </div>
+      <div class='modal-text'>
+        <label for="animeImage">Imagem (Upload de arquivo):</label>
+        <input type="file" id="animeImage" accept="image/*">
+      </div>
+      <button id="saveAnimeBtn">Salvar Anime</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
