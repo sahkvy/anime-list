@@ -2,22 +2,6 @@
 
 Este projeto consiste em uma aplicação simples de gerenciamento de animes assistidos, com backend em Flask e frontend em HTML, CSS e JavaScript. A aplicação permite que os usuários visualizem, adicionem, editem e excluam animes de uma lista.
 
-## Estrutura de Pastas
-
-A estrutura de pastas do projeto é a seguinte:
-
-anime-list/ ├── Backend/ ├── uploads
-            │            └── app.py
-            │
-            ├── Frontend/ ├── images
-            │             ├── index.html
-            │             ├── reset.css
-            │             ├── script.js
-            │             ├── styles.css
-            │
-            ├── README.md 
-            └── requirements.txt
-
 ## Como rodar o projeto
 
 ### Pré-requisitos
@@ -100,7 +84,7 @@ Pode utilizar o live code (extensão do VSCode) se preferir.
 * Editar Anime: Ao clicar em "Editar", o título e a imagem do anime podem ser modificados.
 * Excluir Anime: O anime pode ser removido da lista com a opção de excluir.
 
-### Importante
+# Importante
 
 O backend ainda está em desenvolvimento. A integração com o Flask está em andamento, assim como a configuração de CORS para permitir que o frontend e o backend se comuniquem corretamente.
 
