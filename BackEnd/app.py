@@ -4,7 +4,7 @@ import mysql.connector
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -22,31 +22,43 @@ cursor = db.cursor()
 
 @app.route('/getAnimes', methods=['GET'])
 def get_animes():
-    cursor.execute("SELECT * FROM anime_list")
+    cursor.execute("SELECT id, title, image FROM anime_list")
     result = cursor.fetchall()
-    animes = []
-    for row in result:
-        animes.append({"title": row[1], "image": f"http://localhost:5000/uploads/{row[2]}"})
+    animes = [{"id": row[0], "title": row[1], "image": f"http://localhost:5000/uploads/{row[2]}"} for row in result]
     return jsonify(animes)
 
 @app.route('/addAnime', methods=['POST'])
 def add_anime():
-    try:
-        title = request.form['title']
-        image = request.files['image']
-        
-        if not title or not image:
-            return jsonify({"message": "Title and image are required"}), 400
+    title = request.form['title']
+    image = request.files.get('image')
+    image_filename = image.filename if image else "default.jpg"
+    if image:
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
 
+    cursor.execute("INSERT INTO anime_list (title, image) VALUES (%s, %s)", (title, image_filename))
+    db.commit()
+    return jsonify({"message": "Anime added successfully"}), 201
+
+@app.route('/updateAnime/<int:id>', methods=['PUT'])
+def update_anime(id):
+    title = request.form['title']
+    image = request.files.get('image')
+    
+    if image:
         image_filename = image.filename
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
-        image.save(image_path)
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+        cursor.execute("UPDATE anime_list SET title = %s, image = %s WHERE id = %s", (title, image_filename, id))
+    else:
+        cursor.execute("UPDATE anime_list SET title = %s WHERE id = %s", (title, id))
 
-        cursor.execute("INSERT INTO anime_list (title, image) VALUES (%s, %s)", (title, image_filename))
-        db.commit()
-        return jsonify({"message": "Anime added successfully"}), 201
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
+    db.commit()
+    return jsonify({"message": "Anime updated successfully"})
+
+@app.route('/deleteAnime/<int:id>', methods=['DELETE'])
+def delete_anime(id):
+    cursor.execute("DELETE FROM anime_list WHERE id = %s", (id,))
+    db.commit()
+    return jsonify({"message": "Anime deleted successfully"})
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

@@ -1,25 +1,42 @@
-function updateAnimeList() {
+let allAnimes = [];
+
+function updateAnimeList(filter = '') {
   const animeList = document.getElementById('animeList');
   animeList.innerHTML = '';
 
+  allAnimes
+    .filter(anime => anime.title.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(anime => {
+      const animeItem = document.createElement('div');
+      animeItem.classList.add('body_images_item');
+      animeItem.innerHTML = `
+        <img class="body_image" src="${anime.image}" alt="${anime.title}">
+        <h3>${anime.title}</h3>
+        <button class="edit-btn" onclick="openEditModal(${anime.id}, '${anime.title}', '${anime.image}')">Editar</button>
+        <button class="delete-btn" onclick="deleteAnime(${anime.id})">Excluir</button>
+      `;
+      animeList.appendChild(animeItem);
+    });
+}
+
+function fetchAnimes() {
   fetch('http://localhost:5000/getAnimes')
     .then(response => response.json())
     .then(animes => {
-      animes.forEach(anime => {
-        const animeItem = document.createElement('div');
-        animeItem.classList.add('body_images_item');
-        animeItem.innerHTML = `
-          <img class="body_image" src="${anime.image}" alt="${anime.title}">
-          <h3>${anime.title}</h3>
-        `;
-        animeList.appendChild(animeItem);
-      });
-    })
-    .catch(error => console.error('Error fetching animes:', error));
+      allAnimes = animes;
+      updateAnimeList();
+    });
 }
+
+document.getElementById('searchInput').addEventListener('input', function () {
+  updateAnimeList(this.value);
+});
 
 document.getElementById('addAnimeBtn').addEventListener('click', () => {
   document.getElementById('animeModal').style.display = 'block';
+  document.getElementById('saveAnimeBtn').setAttribute('data-id', '');
+  document.getElementById('animeTitle').value = '';
+  document.getElementById('animeImage').value = '';
 });
 
 document.getElementById('closeModalBtn').addEventListener('click', () => {
@@ -30,45 +47,42 @@ document.getElementById('saveAnimeBtn').addEventListener('click', () => {
   const title = document.getElementById('animeTitle').value;
   const imageInput = document.getElementById('animeImage');
   const imageFile = imageInput.files[0];
+  const animeId = document.getElementById('saveAnimeBtn').getAttribute('data-id');
 
   if (title && imageFile) {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('image', imageFile);
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = () => {
+      const newAnime = { title, image: reader.result };
 
-    fetch('http://localhost:5000/addAnime', {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message === 'Anime added successfully') {
-          document.getElementById('animeTitle').value = '';
-          imageInput.value = '';
-          document.getElementById('animeModal').style.display = 'none';
-          updateAnimeList();
-        } else {
-          alert(data.message);
-        }
+      fetch(`http://localhost:5000/${animeId ? 'updateAnime' : 'addAnime'}`, {
+        method: animeId ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: animeId, ...newAnime }),
       })
-      .catch(error => {
-        console.error('Error adding anime:', error);
-      });
-  } else {
-    alert('Please fill in all fields!');
+        .then(response => response.json())
+        .then(() => {
+          document.getElementById('animeModal').style.display = 'none';
+          fetchAnimes();
+        });
+    };
   }
 });
 
-window.onload = function () {
-  updateAnimeList();
-};
+function openEditModal(id, title, image) {
+  document.getElementById('animeModal').style.display = 'block';
+  document.getElementById('saveAnimeBtn').setAttribute('data-id', id);
+  document.getElementById('animeTitle').value = title;
+}
 
-document.getElementById('searchInput').addEventListener('input', function () {
-  const searchQuery = this.value.toLowerCase();
-  const items = document.querySelectorAll('.body_images_item');
+function deleteAnime(id) {
+  fetch('http://localhost:5000/deleteAnime', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id }),
+  })
+    .then(response => response.json())
+    .then(() => fetchAnimes());
+}
 
-  items.forEach(item => {
-    const title = item.querySelector('h3').textContent.toLowerCase();
-    item.style.display = title.includes(searchQuery) ? 'block' : 'none';
-  });
-});
+window.onload = fetchAnimes;
