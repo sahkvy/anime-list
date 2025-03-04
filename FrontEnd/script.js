@@ -13,7 +13,6 @@ function updateAnimeList(filter = '') {
         <img class="body_image" src="${anime.image}" alt="${anime.title}">
         <h3>${anime.title}</h3>
         <button class="edit-btn" onclick="openEditModal(${anime.id}, '${anime.title}', '${anime.image}')">Editar</button>
-        <button class="delete-btn" onclick="deleteAnime(${anime.id})">Excluir</button>
       `;
       animeList.appendChild(animeItem);
     });
@@ -33,14 +32,18 @@ document.getElementById('searchInput').addEventListener('input', function () {
 });
 
 document.getElementById('addAnimeBtn').addEventListener('click', () => {
-  document.getElementById('animeModal').style.display = 'block';
+  document.getElementById('animeModalCreate').style.display = 'block';
   document.getElementById('saveAnimeBtn').setAttribute('data-id', '');
   document.getElementById('animeTitle').value = '';
   document.getElementById('animeImage').value = '';
 });
 
-document.getElementById('closeModalBtn').addEventListener('click', () => {
-  document.getElementById('animeModal').style.display = 'none';
+document.getElementById('closeModalBtnCreate').addEventListener('click', () => {
+  document.getElementById('animeModalCreate').style.display = 'none';
+});
+
+document.getElementById('closeModalBtnUpdate').addEventListener('click', () => {
+  document.getElementById('animeModalUpdate').style.display = 'none';
 });
 
 document.getElementById('saveAnimeBtn').addEventListener('click', () => {
@@ -62,7 +65,8 @@ document.getElementById('saveAnimeBtn').addEventListener('click', () => {
       })
         .then(response => response.json())
         .then(() => {
-          document.getElementById('animeModal').style.display = 'none';
+          document.getElementById('animeModalCreate').style.display = 'none';
+          document.getElementById('animeModalUpdate').style.display = 'none';
           fetchAnimes();
         });
     };
@@ -70,7 +74,7 @@ document.getElementById('saveAnimeBtn').addEventListener('click', () => {
 });
 
 function openEditModal(id, title, image) {
-  document.getElementById('animeModal').style.display = 'block';
+  document.getElementById('animeModalUpdate').style.display = 'block';
   document.getElementById('saveAnimeBtn').setAttribute('data-id', id);
   document.getElementById('animeTitle').value = title;
 }

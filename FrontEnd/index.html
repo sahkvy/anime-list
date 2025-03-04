@@ -21,10 +21,27 @@
     </div>
   </div>
 
-  <div id="animeModal" class="modal">
+  <div id="animeModalCreate" class="modal">
     <div class="modal-content">
-      <span id="closeModalBtn" class="close">&times;</span>
-      <h2 id="modalTitle">Adicionar ou Editar Anime</h2>
+      <span id="closeModalBtnCreate" class="close">&times;</span>
+      <h2 id="modalTitle">Adicionar Anime</h2>
+      <input type="hidden" id="animeId">
+      <div class="modal-text">
+        <label for="animeTitle">Título:</label>
+        <input type="text" id="animeTitle" placeholder="Título do Anime">
+      </div>
+      <div class="modal-text">
+        <label for="animeImage">Imagem (Upload de arquivo):</label>
+        <input type="file" id="animeImage" accept="image/*">
+      </div>
+      <button id="saveAnimeBtn">Salvar</button>
+    </div>
+  </div>
+
+  <div id="animeModalUpdate" class="modal">
+    <div class="modal-content">
+      <span id="closeModalBtnUpdate" class="close">&times;</span>
+      <h2 id="modalTitle">Editar Anime</h2>
       <input type="hidden" id="animeId">
       <div class="modal-text">
         <label for="animeTitle">Título:</label>
