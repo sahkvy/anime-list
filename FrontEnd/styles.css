@@ -1,13 +1,17 @@
-.content {
+body {
   background-color: #171717;
+}
+
+.content {
   width: 100%;
+  padding-bottom: 80px;
 }
 
 .header {
   display: flex;
   width: 100%;
   justify-content: center;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .header_title {
@@ -25,13 +29,12 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 40px 0;
 }
 
 .search-input {
-  margin: 0 auto 20px;
+  margin: 30px auto;
   padding: 10px;
-  width: 60%;
+  width: 600px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -39,10 +42,10 @@
 }
 
 .add-anime-btn {
-  margin: 20px auto;
+  margin: 0 auto 40px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #3b9dff;
+  background-color: #2e6dcc;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -50,7 +53,7 @@
 }
 
 .add-anime-btn:hover {
-  background-color: #2a7bb8;
+  background-color: #2457a3;
 }
 
 .body_images {
@@ -59,18 +62,33 @@
   justify-content: center;
   gap: 40px 20px;
   flex-wrap: wrap;
+  padding: 0 5vw;
 }
 
 .body_images_item {
   width: 350px;
-  height: 500px;
+  height: auto;
   text-align: center;
+}
+
+.body_images_item h3 {
+  color: white;
+  margin-bottom: 8px;
+}
+
+.body_images_item button {
+  color: white;
+}
+
+.body_images_item button:hover {
+  text-decoration: underline;
 }
 
 .body_image {
   width: 100%;
-  height: auto;
+  height: 500px;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 /* Modal Styles */
@@ -83,6 +101,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+  color: #3b4045;
 }
 
 .modal-content {
@@ -93,19 +112,77 @@
   margin: 100px auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  position: relative;
+}
+
+.modal-title {
+  text-align: center;
 }
 
 .modal-text {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .close {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 10px;
   font-size: 30px;
   cursor: pointer;
+}
+
+.anime-title-placeholder {
+  border: 1px solid #808080;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.anime-save-btn {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.anime-save-btn button {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #2e6dcc;
+  color: white;
+}
+
+.anime-save-btn button:hover {
+  background-color: #2457a3;
+}
+
+.anime-update-btn {
+  display: flex;
+  justify-content: end;
+  gap: 16px;
+}
+
+.anime-update-btn button {
+  padding: 8px;
+}
+
+.anime-update-btn #deleteAnimeBtn {
+  border-radius: 4px;
+  background-color: #d33232;
+  color: white;
+}
+
+.anime-update-btn #deleteAnimeBtn:hover {
+  background-color: #ab2424;
+}
+
+.anime-update-btn #saveAnimeBtn {
+  border-radius: 4px;
+  background-color: #2e6dcc;
+  color: white;
+}
+
+.anime-update-btn #saveAnimeBtn:hover {
+  background-color: #2457a3;
 }

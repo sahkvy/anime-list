@@ -15,8 +15,8 @@
       <h1 class="header_title">Animes assistidos</h1>
     </div>
     <div class="body">
-      <button id="addAnimeBtn" class="add-anime-btn">Adicionar Anime</button>
       <input type="text" id="searchInput" class="search-input" placeholder="Buscar por título...">
+      <button id="addAnimeBtn" class="add-anime-btn">Adicionar Anime</button>
       <div class="body_images" id="animeList"></div>
     </div>
   </div>
@@ -24,17 +24,19 @@
   <div id="animeModalCreate" class="modal">
     <div class="modal-content">
       <span id="closeModalBtnCreate" class="close">&times;</span>
-      <h2 id="modalTitle">Adicionar Anime</h2>
+      <h2 id="modalTitle" class="modal-title">Adicionar Anime</h2>
       <input type="hidden" id="animeId">
       <div class="modal-text">
-        <label for="animeTitle">Título:</label>
-        <input type="text" id="animeTitle" placeholder="Título do Anime">
+        <label for="animeTitle">Título</label>
+        <input type="text" id="animeTitle" class="anime-title-placeholder" placeholder="Título do Anime">
       </div>
       <div class="modal-text">
-        <label for="animeImage">Imagem (Upload de arquivo):</label>
+        <label for="animeImage">Imagem (Upload de arquivo)</label>
         <input type="file" id="animeImage" accept="image/*">
       </div>
-      <button id="saveAnimeBtn">Salvar</button>
+      <div class="anime-save-btn">
+        <button id="saveAnimeBtn">Salvar</button>
+      </div>
     </div>
   </div>
 
@@ -44,15 +46,17 @@
       <h2 id="modalTitle">Editar Anime</h2>
       <input type="hidden" id="animeId">
       <div class="modal-text">
-        <label for="animeTitle">Título:</label>
-        <input type="text" id="animeTitle" placeholder="Título do Anime">
+        <label for="animeTitle">Título</label>
+        <input type="text" id="animeTitle" class="anime-title-placeholder" placeholder="Título do Anime">
       </div>
       <div class="modal-text">
-        <label for="animeImage">Imagem (Upload de arquivo):</label>
+        <label for="animeImage">Imagem (Upload de arquivo)</label>
         <input type="file" id="animeImage" accept="image/*">
       </div>
-      <button id="saveAnimeBtn">Salvar</button>
-      <button id="deleteAnimeBtn" class="delete-btn">Deletar</button>
+      <div class="anime-update-btn">
+        <button id="deleteAnimeBtn" class="delete-btn">Deletar</button>
+        <button id="saveAnimeBtn">Atualizar</button>
+      </div>
     </div>
   </div>
 
