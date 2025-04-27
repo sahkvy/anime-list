@@ -24,18 +24,17 @@
   <div id="animeModalCreate" class="modal">
     <div class="modal-content">
       <span id="closeModalBtnCreate" class="close">&times;</span>
-      <h2 id="modalTitle" class="modal-title">Adicionar Anime</h2>
-      <input type="hidden" id="animeId">
+      <h2 class="modal-title">Adicionar Anime</h2>
       <div class="modal-text">
-        <label for="animeTitle">Título</label>
-        <input type="text" id="animeTitle" class="anime-title-placeholder" placeholder="Título do Anime">
+        <label for="animeTitleCreate">Título</label>
+        <input type="text" id="animeTitleCreate" class="anime-title-placeholder" placeholder="Título do Anime">
       </div>
       <div class="modal-text">
-        <label for="animeImage">Imagem (Upload de arquivo)</label>
-        <input type="file" id="animeImage" accept="image/*">
+        <label for="animeImageCreate">Imagem (Upload de arquivo)</label>
+        <input type="file" id="animeImageCreate" accept="image/*">
       </div>
       <div class="anime-save-btn">
-        <button id="saveAnimeBtn">Salvar</button>
+        <button id="saveAnimeBtnCreate">Salvar</button>
       </div>
     </div>
   </div>
@@ -43,19 +42,19 @@
   <div id="animeModalUpdate" class="modal">
     <div class="modal-content">
       <span id="closeModalBtnUpdate" class="close">&times;</span>
-      <h2 id="modalTitle">Editar Anime</h2>
-      <input type="hidden" id="animeId">
+      <h2 class="modal-title">Editar Anime</h2>
+      <input type="hidden" id="animeIdUpdate">
       <div class="modal-text">
-        <label for="animeTitle">Título</label>
-        <input type="text" id="animeTitle" class="anime-title-placeholder" placeholder="Título do Anime">
+        <label for="animeTitleUpdate">Título</label>
+        <input type="text" id="animeTitleUpdate" class="anime-title-placeholder" placeholder="Título do Anime">
       </div>
       <div class="modal-text">
-        <label for="animeImage">Imagem (Upload de arquivo)</label>
-        <input type="file" id="animeImage" accept="image/*">
+        <label for="animeImageUpdate">Imagem (Upload de arquivo)</label>
+        <input type="file" id="animeImageUpdate" accept="image/*">
       </div>
       <div class="anime-update-btn">
         <button id="deleteAnimeBtn" class="delete-btn">Deletar</button>
-        <button id="saveAnimeBtn">Atualizar</button>
+        <button id="saveAnimeBtnUpdate">Atualizar</button>
       </div>
     </div>
   </div>

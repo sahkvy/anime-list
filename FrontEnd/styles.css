@@ -91,7 +91,6 @@ body {
   object-fit: cover;
 }
 
-/* Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -177,12 +176,12 @@ body {
   background-color: #ab2424;
 }
 
-.anime-update-btn #saveAnimeBtn {
+.anime-update-btn #saveAnimeBtnUpdate {
   border-radius: 4px;
   background-color: #2e6dcc;
   color: white;
 }
 
-.anime-update-btn #saveAnimeBtn:hover {
+.anime-update-btn #saveAnimeBtnUpdate:hover {
   background-color: #2457a3;
 }

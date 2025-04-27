@@ -4,7 +4,12 @@ import mysql.connector
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/addAnime": {"origins": "http://127.0.0.1:5500"},
+    r"/updateAnime/*": {"origins": "http://127.0.0.1:5500"},
+    r"/deleteAnime/*": {"origins": "http://127.0.0.1:5500"},
+    r"/getAnimes": {"origins": "http://127.0.0.1:5500"}
+})
 
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
@@ -24,16 +29,30 @@ cursor = db.cursor()
 def get_animes():
     cursor.execute("SELECT id, title, image FROM anime_list")
     result = cursor.fetchall()
-    animes = [{"id": row[0], "title": row[1], "image": f"http://localhost:5000/uploads/{row[2]}"} for row in result]
+    animes = []
+    for row in result:
+        image_name = str(row[2])
+        if image_name.startswith("b'") and image_name.endswith("'"):
+            image_name = image_name[2:-1]
+        animes.append({
+            "id": row[0],
+            "title": row[1],
+            "image": f"http://localhost:5000/uploads/{image_name}"
+        })
     return jsonify(animes)
 
 @app.route('/addAnime', methods=['POST'])
 def add_anime():
     title = request.form['title']
     image = request.files.get('image')
-    image_filename = image.filename if image else "default.jpg"
+    
     if image:
+        image_filename = image.filename
+        if image_filename.startswith("b'") and image_filename.endswith("'"):
+            image_filename = image_filename[2:-1]
         image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+    else:
+        image_filename = "default.jpg"
 
     cursor.execute("INSERT INTO anime_list (title, image) VALUES (%s, %s)", (title, image_filename))
     db.commit()
@@ -46,6 +65,8 @@ def update_anime(id):
     
     if image:
         image_filename = image.filename
+        if image_filename.startswith("b'") and image_filename.endswith("'"):
+            image_filename = image_filename[2:-1]
         image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
         cursor.execute("UPDATE anime_list SET title = %s, image = %s WHERE id = %s", (title, image_filename, id))
     else:
@@ -62,6 +83,8 @@ def delete_anime(id):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    if filename.startswith("b'") and filename.endswith("'"):
+        filename = filename[2:-1]
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == "__main__":
