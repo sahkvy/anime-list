@@ -35,16 +35,6 @@ Crie um banco de dados chamado anime_db:
 CREATE DATABASE anime_db;
 ```
 
-Crie a tabela anime_list para armazenar os animes:
-
-```bash
-CREATE TABLE anime_list (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    image VARCHAR(255) NOT NULL
-);
-```
-
 Configure suas credenciais do banco de dados no arquivo app.py (caso as padrão não funcionem):
 
 ```bash
@@ -54,6 +44,24 @@ db = mysql.connector.connect(
     password="1234567890",   
     database="anime_db"
 )
+```
+
+Crie a tabela anime_list para armazenar os animes:
+
+```bash
+CREATE TABLE anime_list (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    rating INT DEFAULT 0 NOT NULL
+);
+```
+
+Para incluir um exemplo utilize este código:
+
+```bash
+INSERT INTO anime_list (title, image, rating) 
+VALUES ('Attack on Titan', 'aot_image.jpg', 5);
 ```
 
 ### 3. Rodar o Backend
